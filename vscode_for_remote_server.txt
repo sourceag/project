@@ -1,0 +1,29 @@
+首先现在客户端下载vscode和相关插件：openssh-remote 等等
+sudo apt-get install openssh-client
+sudo apt-get install openssh-server
+sudo apt-get install sshpass
+然后在云服务器检查有没有openssh-server服务
+现在在客户端机器生成公钥：
+
+然后更改私钥文件的访问权限，并且修改配置文件，然后再把公钥复制到云服务器上
+```bash
+ssh-keygen -t rsa -b 4096
+chmod 600 ~/.ssh/id_rsa      
+vim ~/.ssh/config
+Host <your-host-name>
+    HostName <your-host-ip>
+    User <your-user-account>
+    Port 22
+    IdentityFile ~/.ssh/id_rsa      
+ssh-copy-id -i ~/.ssh/id_rsa.pub <your-username>@<your-host-ip>
+```
+然后在云服务器上检查ssh服务是否开启,在上面当然可以直接把公钥复制到云上面.注意上面的username是客户端主机登录windows或mac的用户名,account是云服务器的用户名
+```bash
+sudo systemctl status sshd
+sudo systemctl start sshd
+sudo systemctl enable sshd
+``` 
+然后在本地vscode上安装openssh-remote插件
+然后在vscode的命令面板中输入Remote-SSH: Connect to Host...，选择刚刚配置的主机
+然后就可以连接到云服务器了
+

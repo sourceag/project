@@ -1,4 +1,3 @@
-new file
 ubuntu(for git)
 安装git：
   sudo apt-get install git 
